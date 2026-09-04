@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vantage Point Consulting — Executive Coaching & Leadership</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2322364a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-style='italic' font-size='30' fill='%23b8935a' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#22364a;
+    --slate-deep:#16232f;
+    --gold:#b8935a;
+    --gold-deep:#96723f;
+    --white:#ffffff;
+    --paper:#f7f5f1;
+    --paper-deep:#efe9dd;
+    --ink:#22364a;
+    --ink-soft:#5c6b78;
+    --line:rgba(34,54,74,.14);
+    --radius:10px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif;background:var(--white);color:var(--ink);line-height:1.65;overflow-x:hidden;}
+  h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;color:var(--slate);line-height:1.15;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+  .eyebrow{font-size:13.5px;color:var(--gold-deep);font-weight:600;letter-spacing:.3px;margin-bottom:14px;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:15px;
+    padding:14px 30px;border-radius:var(--radius);border:none;cursor:pointer;
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .3s,color .3s;
+  }
+  .btn-primary{background:var(--slate);color:#fff;}
+  .btn-primary:hover{background:var(--gold-deep);transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(34,54,74,.4);}
+  .btn-gold{background:var(--gold);color:#fff;}
+  .btn-gold:hover{background:var(--gold-deep);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--slate);border:1.5px solid var(--slate);}
+  .btn-outline:hover{background:var(--slate);color:#fff;}
+  .btn-outline-light{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55);}
+  .btn-outline-light:hover{background:rgba(255,255,255,.12);}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+
+  .section-pad{padding:100px 0;}
+  .sec-head{max-width:640px;margin-bottom:56px;}
+  .sec-head h2{font-size:clamp(30px,4vw,40px);margin-bottom:14px;}
+  .sec-head p{color:var(--ink-soft);font-size:16.5px;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;left:0;right:0;z-index:1000;
+    background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    max-width:1240px;margin:0 auto;padding:20px 32px;
+  }
+  .nav-logo{display:flex;flex-direction:column;line-height:1;white-space:nowrap;}
+  .nav-logo .l1{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;color:var(--slate);}
+  .nav-logo .l2{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold-deep);font-weight:600;margin-top:2px;}
+  .nav-links{display:flex;gap:32px;flex:1;justify-content:center;}
+  .nav-links a{font-size:14.5px;font-weight:500;color:var(--ink);position:relative;white-space:nowrap;}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:var(--gold);transition:width .3s var(--ease);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta .btn{padding:11px 22px;font-size:13.5px;white-space:nowrap;}
+  .hamburger{display:none;width:26px;height:20px;flex-direction:column;justify-content:space-between;cursor:pointer;background:none;border:none;z-index:1200;}
+  .hamburger span{display:block;height:2px;width:100%;background:var(--slate);border-radius:2px;transition:all .35s var(--ease);}
+  .hamburger.active span:nth-child(1){transform:translateY(9px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg);}
+  .mobile-menu{
+    position:fixed;top:0;right:-100%;width:78%;max-width:340px;height:100vh;
+    background:var(--white);z-index:1100;padding:100px 36px 40px;
+    display:flex;flex-direction:column;gap:26px;
+    transition:right .45s var(--ease);box-shadow:-14px 0 40px rgba(0,0,0,.12);
+  }
+  .mobile-menu.open{right:0;}
+  .mobile-menu a{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:var(--slate);}
+  .mobile-menu .btn{margin-top:10px;}
+  .menu-overlay{
+    position:fixed;inset:0;background:rgba(20,30,40,.45);z-index:1050;
+    opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s ease;
+  }
+  .menu-overlay.open{opacity:1;visibility:visible;}
+
+  /* ---------- HERO — editorial two column ---------- */
+  .hero{padding:76px 0 0;background:var(--paper);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:start;padding-bottom:70px;}
+  .hero-copy .eyebrow{margin-bottom:20px;}
+  .hero-copy .dropcap{
+    font-family:'Playfair Display',serif;font-size:clamp(21px,2vw,24px);color:var(--slate);
+    font-weight:500;margin-bottom:30px;
+  }
+  .hero-copy .dropcap::first-letter{
+    font-family:'Playfair Display',serif;font-size:76px;line-height:.75;font-weight:600;
+    float:left;padding-right:12px;padding-top:8px;color:var(--gold);
+  }
+  .hero-copy .lede{color:var(--ink-soft);font-size:16.5px;margin-bottom:34px;max-width:480px;}
+  .hero-image{position:relative;}
+  .hero-image img{width:100%;height:560px;object-fit:cover;border-radius:4px;}
+  .hero-image .frame-line{position:absolute;top:20px;left:20px;right:-20px;bottom:-20px;border:1.5px solid var(--gold);border-radius:4px;z-index:-1;}
+  .hero-stats{
+    border-top:1px solid var(--line);padding:44px 0;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:30px;
+  }
+  .stat h3{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(32px,3.4vw,44px);color:var(--slate);}
+  .stat h3 span{color:var(--gold);}
+  .stat p{color:var(--ink-soft);font-size:14px;margin-top:6px;}
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line);}
+  .service-card{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:38px 30px;transition:background .35s ease;}
+  .service-card:hover{background:var(--paper);}
+  .service-num{font-family:'Inter',sans-serif;font-weight:800;font-size:13px;color:var(--gold-deep);letter-spacing:1px;margin-bottom:22px;}
+  .service-card h3{font-size:23px;margin-bottom:12px;}
+  .service-card p{color:var(--ink-soft);font-size:14.5px;}
+
+  /* ---------- APPROACH — 4 step framework ---------- */
+  .approach-strip{position:relative;padding-top:20px;}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;position:relative;}
+  .steps::before{
+    content:"";position:absolute;top:26px;left:6%;right:6%;height:1px;background:var(--line);z-index:0;
+  }
+  .step{position:relative;z-index:1;}
+  .step-num{
+    width:52px;height:52px;border-radius:50%;background:var(--white);border:1.5px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:800;
+    color:var(--gold-deep);font-size:16px;margin-bottom:22px;
+  }
+  .step h3{font-size:20px;margin-bottom:10px;}
+  .step p{color:var(--ink-soft);font-size:14.5px;}
+
+  /* ---------- PULL QUOTE BANNER ---------- */
+  .pullquote-banner{background:var(--slate);color:#fff;padding:90px 0;}
+  .pullquote-banner blockquote{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+    font-size:clamp(24px,3.2vw,36px);max-width:820px;margin:0 auto 26px;text-align:center;
+    line-height:1.4;position:relative;
+  }
+  .pullquote-banner blockquote::before{content:"\201C";color:var(--gold);font-size:60px;display:block;line-height:.4;margin-bottom:18px;font-family:'Playfair Display',serif;}
+  .pullquote-cite{text-align:center;color:var(--gold);font-size:14px;font-weight:600;letter-spacing:.3px;}
+
+  /* ---------- RESULTS / CASE STUDIES ---------- */
+  .results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .result-card{border:1px solid var(--line);border-top:3px solid var(--gold);padding:34px 30px;border-radius:4px;transition:transform .35s var(--ease),box-shadow .35s var(--ease);}
+  .result-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px -24px rgba(34,54,74,.3);}
+  .result-metric{font-family:'Playfair Display',serif;font-weight:600;font-size:38px;color:var(--slate);margin-bottom:10px;}
+  .result-industry{font-size:12.5px;color:var(--gold-deep);font-weight:600;letter-spacing:.4px;margin-bottom:16px;}
+  .result-card p{color:var(--ink-soft);font-size:14.5px;}
+
+  /* ---------- TEAM ---------- */
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .team-card{text-align:left;}
+  .team-photo{border-radius:4px;overflow:hidden;margin-bottom:20px;height:320px;}
+  .team-photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+  .team-card:hover .team-photo img{transform:scale(1.05);}
+  .team-card h3{font-size:22px;margin-bottom:4px;}
+  .team-cred{color:var(--gold-deep);font-size:13px;font-weight:600;margin-bottom:8px;}
+  .team-card p{color:var(--ink-soft);font-size:14px;}
+
+  /* ---------- CLIENT LOGO STRIP ---------- */
+  .logo-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:44px 0;}
+  .logo-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:30px;}
+  .logo-row span{
+    font-family:'Playfair Display',serif;font-style:italic;font-size:20px;color:var(--ink-soft);
+    opacity:.6;transition:opacity .3s ease,color .3s ease;
+  }
+  .logo-row span:hover{opacity:1;color:var(--slate);}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .test-card{background:var(--paper);padding:30px;border-radius:4px;}
+  .test-card p{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--slate);margin-bottom:20px;}
+  .test-who{display:flex;align-items:center;gap:12px;}
+  .test-who img{width:42px;height:42px;border-radius:50%;object-fit:cover;}
+  .test-name{font-weight:600;font-size:14px;}
+  .test-role{font-size:12.5px;color:var(--ink-soft);}
+
+  /* ---------- SPEAKING / WORKSHOPS ---------- */
+  .speaking-strip{background:var(--slate-deep);color:#fff;padding:70px 0;}
+  .speaking-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:36px;}
+  .speaking-inner h2{color:#fff;}
+  .topic-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .topic-chip{border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:20px;transition:border-color .3s ease,background .3s ease;}
+  .topic-chip:hover{border-color:var(--gold);background:rgba(184,147,90,.08);}
+  .topic-chip h4{color:var(--gold);font-size:16px;margin-bottom:8px;font-family:'Playfair Display',serif;}
+  .topic-chip p{color:rgba(255,255,255,.72);font-size:13.5px;}
+
+  /* ---------- INSIGHTS ---------- */
+  .insights-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .insight-card{border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:transform .35s var(--ease);}
+  .insight-card:hover{transform:translateY(-6px);}
+  .insight-img{height:190px;overflow:hidden;}
+  .insight-img img{width:100%;height:100%;object-fit:cover;}
+  .insight-body{padding:24px;}
+  .insight-tag{font-size:12px;color:var(--gold-deep);font-weight:600;letter-spacing:.3px;margin-bottom:10px;}
+  .insight-body h3{font-size:20px;margin-bottom:10px;}
+  .insight-body p{color:var(--ink-soft);font-size:14px;margin-bottom:14px;}
+  .insight-body a{font-size:13.5px;font-weight:600;color:var(--slate);border-bottom:1px solid var(--gold);padding-bottom:2px;}
+
+  /* ---------- BOOKING FORM ---------- */
+  .booking-wrap{background:var(--paper);}
+  .booking-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center;}
+  .booking-form-card{background:var(--white);border-radius:4px;border:1px solid var(--line);padding:44px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .form-field{display:flex;flex-direction:column;gap:8px;}
+  .form-field.full{grid-column:1/-1;}
+  .form-field label{font-size:12.5px;font-weight:600;color:var(--ink-soft);}
+  .form-field input,.form-field select,.form-field textarea{
+    padding:13px 16px;border:1.5px solid var(--line);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:15px;
+    background:var(--paper);transition:border-color .3s ease;resize:vertical;
+  }
+  .form-field input:focus,.form-field select:focus,.form-field textarea:focus{outline:none;border-color:var(--gold);}
+  .form-submit{margin-top:6px;}
+  .form-submit .btn{width:100%;padding:16px;font-size:16px;}
+  .booking-side .dropcap{font-family:'Playfair Display',serif;font-size:19px;color:var(--slate);}
+  .booking-side .dropcap::first-letter{
+    font-family:'Playfair Display',serif;font-size:56px;line-height:.7;font-weight:600;
+    float:left;padding-right:10px;color:var(--gold);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .contact-card{border:1px solid var(--line);border-radius:4px;padding:30px;}
+  .contact-card h3{font-size:18px;margin-bottom:8px;}
+  .contact-card p{color:var(--ink-soft);font-size:14.5px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--slate-deep);color:rgba(255,255,255,.85);padding:70px 0 30px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px;}
+  .footer-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:24px;color:#fff;margin-bottom:14px;}
+  .footer-grid > div p{color:rgba(255,255,255,.6);font-size:14px;max-width:280px;}
+  .footer-col h4{color:#fff;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;margin-bottom:16px;}
+  .footer-col a{display:block;color:rgba(255,255,255,.6);font-size:14px;margin-bottom:10px;transition:color .3s;}
+  .footer-col a:hover{color:var(--gold);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.14);padding-top:24px;display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.5);}
+  .socials{display:flex;gap:14px;}
+  .socials a{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:12px;}
+  .socials a:hover{background:var(--gold);border-color:var(--gold);color:var(--slate-deep);}
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(22,35,47,.6);z-index:3000;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;
+  }
+  .modal-overlay.open{opacity:1;visibility:visible;}
+  .modal-card{
+    background:var(--white);border-radius:4px;padding:44px 40px;max-width:400px;width:90%;
+    text-align:center;transform:scale(.85);transition:transform .4s var(--ease);
+    border-top:3px solid var(--gold);
+  }
+  .modal-overlay.open .modal-card{transform:scale(1);}
+  .modal-icon{
+    width:58px;height:58px;border-radius:50%;background:var(--slate);color:var(--gold);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:26px;
+  }
+  .modal-card h3{font-size:23px;margin-bottom:10px;}
+  .modal-card p{color:var(--ink-soft);font-size:14.5px;margin-bottom:26px;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1199px){
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .results-grid,.team-grid,.test-grid,.insights-grid{grid-template-columns:repeat(2,1fr);}
+    .steps,.topic-row{grid-template-columns:repeat(2,1fr);}
+    .steps::before{display:none;}
+    .hero-grid{gap:44px;}
+    .booking-grid{grid-template-columns:1fr;gap:40px;}
+    .footer-grid{grid-template-columns:1.2fr 1fr 1fr;}
+    .section-pad{padding:80px 0;}
+  }
+  @media (max-width:1050px){
+    .nav-links{display:none;}
+    .nav-cta{display:none;}
+    .hamburger{display:flex;}
+  }
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-image{order:-1;}
+    .hero-image img{height:340px;}
+    .hero-image .frame-line{display:none;}
+  }
+  @media (max-width:767px){
+    .wrap{padding:0 22px;}
+    .nav-inner{padding:16px 22px;}
+    .hero{padding-top:40px;}
+    .hero-stats{grid-template-columns:repeat(2,1fr);gap:26px 20px;}
+    .services-grid{grid-template-columns:1fr;border-left:none;}
+    .service-card{border-left:1px solid var(--line);}
+    .steps,.topic-row{grid-template-columns:1fr;}
+    .results-grid,.team-grid,.test-grid,.insights-grid,.contact-grid{grid-template-columns:1fr;}
+    .logo-row{justify-content:center;gap:24px;text-align:center;}
+    .form-grid{grid-template-columns:1fr;}
+    .booking-form-card{padding:28px 22px;}
+    .speaking-inner{flex-direction:column;align-items:flex-start;gap:16px;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-bottom{flex-direction:column;gap:14px;text-align:center;}
+    .section-pad{padding:56px 0;}
+    .sec-head{margin-bottom:36px;}
+    .pullquote-banner{padding:60px 0;}
+  }
+  @media (max-width:380px){
+    .wrap{padding:0 16px;}
+    .nav-inner{padding:14px 16px;}
+    .modal-card{padding:32px 24px;}
+    .booking-form-card{padding:22px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="nav" id="navHeader">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="l1">Vantage Point</span>
+      <span class="l2">CONSULTING</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
+      <a href="#results">Results</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta"><a href="#booking" class="btn btn-primary">Book a Discovery Call</a></div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home">Home</a>
+  <a href="#services">Services</a>
+  <a href="#approach">Approach</a>
+  <a href="#about">About</a>
+  <a href="#results">Results</a>
+  <a href="#contact">Contact</a>
+  <a href="#booking" class="btn btn-primary">Book a Discovery Call</a>
+</div>
+
+<!-- HERO — editorial two column -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Executive coaching & leadership consulting, since 2013</p>
+        <p class="dropcap">Every leader we work with is already capable. What's usually missing isn't skill — it's a clear enough vantage point to see where the next real decision is, and the nerve to make it before the pressure forces their hand.</p>
+        <p class="lede">Vantage Point works with senior executives and their teams on the transitions that matter most: new roles, growth stages, restructures, and the quiet moments in between where direction actually gets set.</p>
+        <a href="#booking" class="btn btn-primary">Book a Discovery Call</a>
+      </div>
+      <div class="hero-image reveal">
+        <div class="frame-line"></div>
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=80" alt="Executive coaching session">
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><h3 data-count="640">0<span>+</span></h3><p>Executives coached</p></div>
+      <div class="stat"><h3 data-count="120">0<span>+</span></h3><p>Companies served</p></div>
+      <div class="stat"><h3 data-count="13">0</h3><p>Years in practice</p></div>
+      <div class="stat"><h3 data-count="96">0<span>%</span></h3><p>Client satisfaction</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section-pad" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">What we do</p>
+      <h2>Four ways we work with leaders</h2>
+      <p>Engagements are built around the transition in front of you, not a fixed curriculum.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Executive Coaching</h3>
+        <p>One-on-one work for senior leaders navigating new scope, new pressure, or a new seat at the table.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Leadership Development</h3>
+        <p>Structured programs that build judgment and range in rising leaders before they're handed the title.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Team Performance</h3>
+        <p>Diagnosing what's actually slowing a leadership team down, then rebuilding how it makes decisions.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Org Strategy</h3>
+        <p>Aligning structure, incentives, and leadership bandwidth with where the business is actually headed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="section-pad approach-strip" id="approach" style="background:var(--paper);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">How we work</p>
+      <h2>A four-step framework, not a formula</h2>
+      <p>The order holds; the pace and depth are set by what the leader in front of us actually needs.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3>Diagnose</h3>
+        <p>Structured interviews and 360 input to find the real constraint, not the presenting symptom.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <h3>Calibrate</h3>
+        <p>A working model of the leader's current judgment, blind spots, and decision patterns.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <h3>Practice</h3>
+        <p>Live application inside real decisions — not case studies, the actual week ahead.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <h3>Sustain</h3>
+        <p>Spaced check-ins and metrics that hold the shift in place after the engagement ends.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section class="pullquote-banner">
+  <div class="wrap">
+    <blockquote class="reveal">Coaching that doesn't change a single decision in the next ninety days isn't coaching — it's an expensive conversation.</blockquote>
+    <p class="pullquote-cite">— Elena Marsh, Founder & Principal Coach</p>
+  </div>
+</section>
+
+<!-- RESULTS / CASE STUDIES -->
+<section class="section-pad" id="results">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Track record</p>
+      <h2>Results our clients point to</h2>
+      <p>A few of the engagements we can talk about in specifics.</p>
+    </div>
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-metric">6 mo.</div>
+        <div class="result-industry">Fintech — Series C</div>
+        <p>A newly promoted VP of Engineering moved from reactive firefighting to a working operating rhythm in one and a half quarters.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-metric">+38%</div>
+        <div class="result-industry">Healthcare — Regional Network</div>
+        <p>A leadership team's decision cycle time dropped by over a third after we restructured how escalations were handled.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-metric">$2.1M</div>
+        <div class="result-industry">Manufacturing — Mid-Market</div>
+        <p>Org redesign work recovered management bandwidth equivalent to seven senior roles within two quarters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section-pad" id="about" style="background:var(--paper);">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Meet the team</p>
+      <h2>The people behind the work</h2>
+      <p class="dropcap" style="max-width:760px;color:var(--ink-soft);font-size:16.5px;">Vantage Point was founded in 2013 by Elena Marsh after a decade inside operating roles convinced her that most leadership advice is either too abstract to use or too generic to trust. The practice has stayed small and senior on purpose.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-photo"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80" alt="Elena Marsh"></div>
+        <h3>Elena Marsh</h3>
+        <div class="team-cred">Founder & Principal Coach, PCC</div>
+        <p>Specialty: C-suite transitions and founder-to-CEO evolution.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-photo"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=500&q=80" alt="David Okafor"></div>
+        <h3>David Okafor</h3>
+        <div class="team-cred">Director, Leadership Development</div>
+        <p>Specialty: building leadership pipelines inside fast-scaling companies.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-photo"><img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=500&q=80" alt="Priya Anand"></div>
+        <h3>Priya Anand</h3>
+        <div class="team-cred">Lead, Team Performance</div>
+        <p>Specialty: decision-rhythm redesign for senior leadership teams.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT LOGO STRIP -->
+<section class="logo-strip">
+  <div class="wrap">
+    <div class="logo-row">
+      <span>Meridian Holdings</span>
+      <span>Northgate Group</span>
+      <span>Calder & Vance</span>
+      <span>Solstice Partners</span>
+      <span>Ashford Industries</span>
+      <span>Brightline Capital</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">In their words</p>
+      <h2>What clients tell us afterward</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <p>"Elena asked me one question in our first session that I'm still working through a year later."</p>
+        <div class="test-who">
+          <img src="https://randomuser.me/api/portraits/women/50.jpg" alt="Client">
+          <div><div class="test-name">Sarah Coleman</div><div class="test-role">COO, Meridian Holdings</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p>"The team performance work was the first time an outside group actually changed how we run a meeting."</p>
+        <div class="test-who">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Client">
+          <div><div class="test-name">James Whitfield</div><div class="test-role">CEO, Northgate Group</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p>"David's development program is the reason we didn't have to hire externally for two VP roles this year."</p>
+        <div class="test-who">
+          <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Client">
+          <div><div class="test-name">Anita Roy</div><div class="test-role">Head of People, Solstice Partners</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p>"Priya rebuilt our escalation process in three weeks. It should have been obvious. It wasn't, until she showed us."</p>
+        <div class="test-who">
+          <img src="https://randomuser.me/api/portraits/men/60.jpg" alt="Client">
+          <div><div class="test-name">Marcus Feld</div><div class="test-role">VP Engineering, Calder & Vance</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p>"Not therapy, not consulting — something more useful than either on its own."</p>
+        <div class="test-who">
+          <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Client">
+          <div><div class="test-name">Rachel Kim</div><div class="test-role">CFO, Ashford Industries</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p>"Six months in, our leadership team argues less and decides faster. That trade is worth everything we paid."</p>
+        <div class="test-who">
+          <img src="https://randomuser.me/api/portraits/men/29.jpg" alt="Client">
+          <div><div class="test-name">Oliver Grant</div><div class="test-role">Managing Director, Brightline Capital</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKING / WORKSHOPS -->
+<section class="speaking-strip">
+  <div class="wrap">
+    <div class="speaking-inner">
+      <div>
+        <p class="eyebrow" style="color:var(--gold);">Speaking & workshops</p>
+        <h2>Bring the work into the room</h2>
+      </div>
+      <a href="#contact" class="btn btn-outline-light">Enquire about a session</a>
+    </div>
+    <div class="topic-row">
+      <div class="topic-chip">
+        <h4>The First 90 Days</h4>
+        <p>A workshop for newly promoted executives on setting direction before the org sets it for them.</p>
+      </div>
+      <div class="topic-chip">
+        <h4>Deciding Faster, Together</h4>
+        <p>A half-day session rebuilding how a leadership team actually reaches decisions.</p>
+      </div>
+      <div class="topic-chip">
+        <h4>Feedback That Lands</h4>
+        <p>Practical keynote and workshop on delivering hard feedback without softening it into nothing.</p>
+      </div>
+      <div class="topic-chip">
+        <h4>Scaling Without Losing the Room</h4>
+        <p>For founders and early leaders on staying legible as the company outgrows them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="section-pad">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Insights</p>
+      <h2>Recent writing</h2>
+    </div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-img"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Article"></div>
+        <div class="insight-body">
+          <div class="insight-tag">Leadership</div>
+          <h3>The Quiet Cost of Being Liked</h3>
+          <p>Why the leaders who avoid friction longest often pay for it in a much larger form, later.</p>
+          <a href="#">Read the piece</a>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-img"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" alt="Article"></div>
+        <div class="insight-body">
+          <div class="insight-tag">Team Performance</div>
+          <h3>Your Meeting Isn't the Problem</h3>
+          <p>Most "meeting culture" complaints are actually a decision-rights problem in disguise.</p>
+          <a href="#">Read the piece</a>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-img"><img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80" alt="Article"></div>
+        <div class="insight-body">
+          <div class="insight-tag">Org Strategy</div>
+          <h3>What Structure Can't Fix</h3>
+          <p>A reorg will not solve a judgment problem — and it usually just relocates it.</p>
+          <a href="#">Read the piece</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="section-pad booking-wrap" id="booking">
+  <div class="wrap">
+    <div class="booking-grid">
+      <div class="booking-side reveal">
+        <p class="eyebrow">Start a conversation</p>
+        <p class="dropcap">A discovery call is thirty minutes, no pitch deck involved. We'll ask about the decision or transition in front of you, and tell you honestly whether we're the right fit for it.</p>
+      </div>
+      <div class="booking-form-card reveal">
+        <form id="bookingForm" onsubmit="return handleBookingSubmit(event)">
+          <div class="form-grid">
+            <div class="form-field"><label>Full Name</label><input type="text" required placeholder="Your name"></div>
+            <div class="form-field"><label>Email</label><input type="email" required placeholder="you@company.com"></div>
+            <div class="form-field"><label>Company</label><input type="text" required placeholder="Company name"></div>
+            <div class="form-field"><label>Role</label><input type="text" required placeholder="Your title"></div>
+            <div class="form-field full"><label>What brings you here?</label><textarea rows="4" placeholder="A few lines on the situation..."></textarea></div>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary">Book a Discovery Call</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section-pad" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Reach us</p>
+      <h2>Get in touch directly</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>Office</h3>
+        <p>220 Meridian Tower, Suite 1400, Karachi</p>
+      </div>
+      <div class="contact-card">
+        <h3>Phone</h3>
+        <p>+92 300 987 6543</p>
+      </div>
+      <div class="contact-card">
+        <h3>Email</h3>
+        <p>hello@vantagepointconsulting.com</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Vantage Point</div>
+        <p>Executive coaching and leadership consulting for senior teams, since 2013.</p>
+        <div class="socials" style="margin-top:20px;">
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="X">X</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Work</h4>
+        <a href="#services">Services</a>
+        <a href="#approach">Approach</a>
+        <a href="#results">Results</a>
+      </div>
+      <div class="footer-col">
+        <h4>Firm</h4>
+        <a href="#about">About</a>
+        <a href="#">Insights</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Start Here</h4>
+        <a href="#booking">Book a Call</a>
+        <a href="#">Speaking</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Vantage Point Consulting. All rights reserved.</span>
+      <span>Clarity, then decisions.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card">
+    <div class="modal-icon">✓</div>
+    <h3 id="modalTitle">Request received</h3>
+    <p id="modalText">Thank you — our team will follow up shortly.</p>
+    <button class="btn btn-primary" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuOverlay = document.getElementById('menuOverlay');
+  function toggleMenu(){
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+    menuOverlay.classList.toggle('open');
+  }
+  hamburger.addEventListener('click', toggleMenu);
+  menuOverlay.addEventListener('click', toggleMenu);
+  document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', toggleMenu));
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.15});
+  revealEls.forEach(el => io.observe(el));
+
+  const counters = document.querySelectorAll('.stat h3');
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const el = e.target;
+        const target = parseInt(el.dataset.count, 10);
+        const suffixEl = el.querySelector('span');
+        const suffix = suffixEl ? suffixEl.outerHTML : '';
+        let cur = 0;
+        const step = Math.max(1, Math.round(target/50));
+        const timer = setInterval(() => {
+          cur += step;
+          if(cur >= target){ cur = target; clearInterval(timer); }
+          el.innerHTML = cur + suffix;
+        }, 30);
+        cio.unobserve(el);
+      }
+    });
+  }, {threshold:.4});
+  counters.forEach(c => cio.observe(c));
+
+  const modalOverlay = document.getElementById('modalOverlay');
+  function openModal(title, text){
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalText').textContent = text;
+    modalOverlay.classList.add('open');
+  }
+  function closeModal(){ modalOverlay.classList.remove('open'); }
+  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeModal(); });
+
+  function handleBookingSubmit(e){
+    e.preventDefault();
+    openModal('Call requested','Thank you — we\'ll email you shortly to confirm a time for your discovery call.');
+    e.target.reset();
+    return false;
+  }
+</script>
+</body>
+</html>
